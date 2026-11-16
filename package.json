@@ -10,7 +10,11 @@
     "test:ui": "playwright test tests/ui",
     "test:headed": "playwright test --headed",
     "report": "playwright show-report",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run --browser electron",
+    "cy:catalogo": "cypress run --spec cypress/e2e/catalogo.cy.js",
+    "cy:carrinho": "cypress run --spec cypress/e2e/carrinho.cy.js"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +23,7 @@
   "devDependencies": {
     "@playwright/test": "^1.65.1",
     "@types/node": "^26.6.6",
+    "cypress": "^16.3.0",
     "typescript": "^7.0.2"
   },
   "private": true,

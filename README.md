@@ -53,3 +53,16 @@ npm run test:headed
 A aplicação é uma fixture educacional. Os registros ficam em memória e desaparecem ao reiniciar o servidor; a interface não recarrega registros e a conclusão é apenas visual, sem persistência na API. Não há autenticação, banco de dados, testes de carga, auditoria de segurança ou validação completa de acessibilidade. A cobertura de interface usa somente Chromium. O teste de erro HTTP utiliza interceptação e não valida uma falha real de infraestrutura.
 
 O projeto foi elaborado com assistência de IA. Estude, execute e adapte os cenários antes de apresentá-lo; descreva como projeto de estudo e não como experiência profissional. A documentação não afirma resultados que não tenham sido executados.
+
+## Cypress — Bellatrix Demos
+
+Nova suíte E2E no site real https://demos.bellatrix.solutions/, independente dos testes locais com Playwright.
+
+```bash
+npm ci
+npm run cy:open
+# Ou execução sem interface:
+npm run cy:run
+```
+
+São 10 cenários de catálogo, busca, ordenação, detalhes e carrinho. Consulte o [guia completo de Cypress](docs/cypress-bellatrix.md). O workflow **Cypress - Bellatrix** executa a suíte e guarda vídeos, screenshots de falhas e resultados JUnit.
