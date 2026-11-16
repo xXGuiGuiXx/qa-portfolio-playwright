@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="pt-BR"><meta charset="utf-8"><title>QA Task Lab</title>
+<style>body{font:18px system-ui;max-width:650px;margin:60px auto;padding:20px}input,button{font:inherit;padding:8px}li{margin:15px 0} .done span{text-decoration:line-through}</style>
+<h1>QA Task Lab</h1><p>Laboratório local de testes de software</p>
+<form><label for="title">Nova tarefa</label><input id="title" maxlength="100"><button>Adicionar</button></form>
+<p role="status" aria-live="polite"></p><ul aria-label="Tarefas"></ul>
+<script>
+const form = document.querySelector('form'), input = document.querySelector('input'), status = document.querySelector('[role=status]'), list = document.querySelector('ul');
+form.addEventListener('submit', async event => {
+ event.preventDefault(); status.textContent = '';
+ if (!input.value.trim()) { status.textContent = 'Informe o título da tarefa'; return; }
+ try {
+ const response = await fetch('/api/tasks', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({title:input.value})});
+ if (!response.ok) throw new Error();
+ const task = await response.json(), row = document.createElement('li'), title = document.createElement('span'), check = document.createElement('input'), remove = document.createElement('button');
+ title.textContent = task.title; check.type = 'checkbox'; check.setAttribute('aria-label', 'Concluir ' + task.title);
+ check.addEventListener('change', () => row.classList.toggle('done', check.checked));
+ remove.textContent = 'Excluir'; remove.setAttribute('aria-label', 'Excluir ' + task.title);
+ remove.addEventListener('click', async () => { const result = await fetch('/api/tasks/' + task.id, {method:'DELETE'}); if(result.ok) row.remove(); else status.textContent = 'Não foi possível excluir a tarefa'; });
+ row.append(check, title, remove); list.append(row); input.value = ''; status.textContent = 'Tarefa adicionada';
+ } catch { status.textContent = 'Não foi possível adicionar a tarefa'; }
+});
+</script></html>
